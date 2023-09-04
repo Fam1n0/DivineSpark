@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosmic Symphony</title>
+<style>
+body {
+  background: url('https://github.com/Fam1n0/DivineSpark/universe.jpg') no-repeat center center fixed; 
+  background-size: cover;
+  color: white;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+  #canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .center {
+    position: relative;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<div class="center">
+  <h1>Cosmic Symphony: The Harmony of the Universe</h1>
+</div>
+
+<script>
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let particlesArray = [];
+
+  class Particle {
+    constructor(x, y, size, speed, color) {
+      this.x = x;
+      this.y = y;
+      this.size = size;
+      this.speed = speed;
+      this.color = color;
+    }
+    
+    update() {
+      this.y += this.speed.y;
+      this.x += this.speed.x;
+      if (this.size > 0.2) this.size -= 0.01;
+    }
+
+    draw() {
+      ctx.fillStyle = this.color;
+      ctx.strokeStyle = 'black';
+      ctx.lineWidth = 0.2;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
+  }
+
+  function handleParticles() {
+    for (let i = 0; i < particlesArray.length; i++) {
+      particlesArray[i].update();
+      particlesArray[i].draw();
+      if (particlesArray[i].size <= 0.2) {
+        particlesArray.splice(i, 1);
+        i--;
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    handleParticles();
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  setInterval(() => {
+    let x = (Math.random() * canvas.width);
+    let y = (Math.random() * canvas.height);
+    let size = Math.random() * 5 + 3;
+    let speed = { x: (Math.random() * 3) - 1.5, y: (Math.random() * 3) - 1.5 };
+    let color = 'rgba(255, 255, 255, 0.7)';
+    particlesArray.push(new Particle(x, y, size, speed, color));
+  }, 50);
+</script>
+
+
+</body>
+</html>
