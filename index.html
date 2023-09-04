@@ -17,15 +17,18 @@ body {
   overflow: hidden;
 }
 
-  #canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  .center {
-    position: relative;
-    text-align: center;
-  }
+#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: transparent;
+}
+
+.center {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
 </style>
 </head>
 <body>
@@ -98,7 +101,6 @@ body {
     particlesArray.push(new Particle(x, y, size, speed, color));
   }, 50);
 </script>
-
 
 </body>
 </html>
